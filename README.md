@@ -2,7 +2,7 @@ Bee-boop. Mr. Robot Progress Report
 
 Yo! Hi all. This is my Mr. Robot write-up and my very first attempt at capturing flags without any follow-along videos. I will use other write-ups for guidance if I truly get stuck or have exhausted all of my options via Google recon. This will take some time, as I just had my first child. So, with time off from work, I have one month to find all the flags. I just hope I can finish before then. Prayers up!
 
-Day One – May 18th
+                                                                                    Day One – May 18th
 
 After installing Mr. Robot, I entered my Linux credentials just to see if I could access it from the jump. I ran Ifconfig to find the IP address of the host system: NAT Network 192.168.x.x and Bridged 10.0.0.x
 
