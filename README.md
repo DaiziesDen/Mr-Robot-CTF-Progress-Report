@@ -134,12 +134,12 @@ So, I asked Google why Nmap was in my local bin. It said normally it is fine, as
 
 ![Capture d'écran 2025-06-23 093521](https://github.com/user-attachments/assets/d0c49273-abd2-4b65-8715-30cf63adc2e1)
 
-SOOOOOOO, this means I can also attack it. I looked up Nmap escalation techniques. Let's see where this rabbit hole goes. This led me to https://gtfobins.github.io/gtfobins/nmap/. I then checked the Nmap version to confirm which command would yield the best results. I settled with the interactive command as Mr. Robot was running Nmap 3.81. The escalation vulnerability covers 2.02 - 5.21. 
+SOOOOOOO, this means I can also attack it. I looked up Nmap escalation techniques. Let's see where this rabbit hole goes. This led me to https://gtfobins.github.io/gtfobins/nmap/. I then checked the Nmap version to confirm which command would yield the best results. I settled with the interactive command as Mr. Robot was running Nmap 3.81. The escalation vulnerability covers 2.02 - 5.21. I ran the interactive command, opened the root directory and found the 3rd key. The box is now complete.  
 
 ![Capture d'écran 2025-06-23 095823](https://github.com/user-attachments/assets/dcd20414-d562-4c04-a3f1-e506d29687fe)
 ![Capture d'écran 2025-06-23 101000](https://github.com/user-attachments/assets/6a52c2fc-9aff-4de8-891d-905f33be45d1)
 ![Capture d'écran 2025-06-23 101014](https://github.com/user-attachments/assets/0836c8c4-1c91-417b-9135-94dc2a3a8dce)
 
 
-3rd key found and box complete. I'd say I completed this box with about 25 percent of help. Quite a big step for me. 
+I'd say I completed this with about 25 percent of help. Quite a big step for me.
 Daizi - 1. Mr. Robot - 0.
