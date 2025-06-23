@@ -86,5 +86,60 @@ Thanks to a video by [EmbraceTheRed](https://www.youtube.com/watch?v=ZOGYnDW8_OY
 
 Day Seven – June 11th
 
-Two weeks left till I return to work. I really pray I can find all the flags by then. If not, well, that’s okay. As long as I complete the box, I will be pleased with my efforts and growth. As will my wife. 
+Two weeks left till I return to work. I pray I can find all the flags by then. If not, well, that’s okay. As long as I complete the box, I will be pleased with my efforts and growth. As will my wife. 
 
+Day Eight – June 20th
+
+I have once again confirmed the IP address and that port 80 is running. I will port forward another service to a port of my choice and hope this allows me to proceed with the next step. So, port forwarding from my host machine to the guest machine DID NOTHING in the grand scheme of things for what I was working towards. After a few more hours of testing, I learned that some ports, for example: 5555, 6666, 1234, and 5090, did not work. 
+
+![Capture d'écran 2025-06-20 080116](https://github.com/user-attachments/assets/824e43a5-1479-49a8-b8b1-90e55aab7416)
+
+
+Why? I am not sure. I did recon on common ports, uncommon ports, and what combinations I can use, and nothing made sense compared to the results. The ONLY port that Netcat was able to listen to, AND the URL triggered was port 4444. Another thing to note, which took me a while to spot, was the difference in IP addresses. Insert Mr. Robot's IP address in the browser to trigger the port alert using Netcat. Ex: 192.168.456.9/zrgizeo. Insert the host machine's IP address, or the machine attacking Mr. Robot, into the PHP reverse shell script before saving and refreshing the browser tab used for triggering the port alert.
+
+![Capture d'écran 2025-06-20 080458](https://github.com/user-attachments/assets/51c6c088-78c1-402a-b7b7-e4d586222f51)
+
+
+I wanted to stabilize my shell but ran into a repository error with kali-rolling. So, I located the sources.list.d file, deleted all the contents, and did a fresh install of the latest kali-rolling version using " echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" | sudo tee /etc/apt/sources.list.d/kali.list ". Then, I re-ran the Python command python -c "import pty; pty.spawn('/bin/bash')" to stabilize the shell. 
+
+![Capture d'écran 2025-06-20 094144](https://github.com/user-attachments/assets/4f1eb151-b17a-4b98-9f9a-9a2054bb514d)
+
+
+Day Nine – June 23rd
+
+After doing recon, I found a file dubbed "robot" located in the home directory. This directory contains Key 2 and another MD5 hash value for a password. 
+
+![Capture d'écran 2025-06-20 095919](https://github.com/user-attachments/assets/9e3c049d-483f-42bb-8c82-0e108e5df3a4)
+![Capture d'écran 2025-06-20 095858](https://github.com/user-attachments/assets/724d39cb-4c27-4bf9-8205-92d0c9a2211e)
+
+
+After decoding it, the password is the entire alphabet A-Z. I tried opening the txt. file and I was denied access. I checked the permissions of the file using ls -l and saw it only allows read. I followed up with sudo cat filename.txt and was asked to input the password for Daemon. I tried a few times, but nothing permitted access. I switched gears before losing motivation. What else can I do with this data? On Daemon’s account, there is a username, Robot, and I have a password. This could be useless, but let's see if I can log into the Mr. Robot VM. Low and behold, it worked. 
+
+![Capture d'écran 2025-06-21 130326](https://github.com/user-attachments/assets/17943abe-4af4-414b-ba61-5b023ba93bb3)
+
+
+Officially read the 2nd key: 822c73956184f694993bede3eb39f959 (string), which translates to bf0b651192b83737dd47b93050d19abd (hash). I am not sure where to insert this data, so I will keep chugging along. Once I verified the credentials, I tried logging in again on the Linux command line, but no success. I googled “how to change users in the command line” and was told to use su + the user. I switched to the user “Robot” and used cat key-2-of-3.txt to verify I could read the data. 
+
+Now I am stuck again. What do I do next? In my master's program, we were taught how to escalate privileges to root using the MetasploitDB. I also looked into how to escalate privileges outside of that and found “SUID files” and ran the command "find / -perm -4000 -type f -exec ls -l {} \; 2>/dev/null". Guess I'll start here before trying MetasploitDB. 
+
+![Capture d'écran 2025-06-23 093540](https://github.com/user-attachments/assets/e9a30a07-b0d1-45a4-b093-e983501db194)
+
+
+I used the cat command for paths ending in /passwd, /gpasswd, /su, and /Nmap, but all data yielded was illegible. 
+
+![Capture d'écran 2025-06-23 123502](https://github.com/user-attachments/assets/535353c1-dd6f-4846-8ef3-3414457825a0)
+
+
+So, I asked Google why Nmap was in my local bin. It said normally it is fine, as local/bin could be a default path. I then asked if it's a misconfiguration if Nmap has the SUID bit set and Google said:
+
+![Capture d'écran 2025-06-23 093521](https://github.com/user-attachments/assets/d0c49273-abd2-4b65-8715-30cf63adc2e1)
+
+SOOOOOOO, this means I can also attack it. I looked up Nmap escalation techniques. Let's see where this rabbit hole goes. This led me to https://gtfobins.github.io/gtfobins/nmap/. I then checked the Nmap version to confirm which command would yield the best results. I settled with the interactive command as Mr. Robot was running Nmap 3.81. The escalation vulnerability covers 2.02 - 5.21. 
+
+![Capture d'écran 2025-06-23 095823](https://github.com/user-attachments/assets/dcd20414-d562-4c04-a3f1-e506d29687fe)
+![Capture d'écran 2025-06-23 101000](https://github.com/user-attachments/assets/6a52c2fc-9aff-4de8-891d-905f33be45d1)
+![Capture d'écran 2025-06-23 101014](https://github.com/user-attachments/assets/0836c8c4-1c91-417b-9135-94dc2a3a8dce)
+
+
+3rd key found and box complete. I'd say I completed this box with about 25 percent of help. Quite a big step for me. 
+Daizi - 1. Mr. Robot - 0.
